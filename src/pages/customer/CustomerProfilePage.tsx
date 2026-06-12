@@ -1,22 +1,18 @@
-import { Paper, Stack, Typography } from '@mui/material';
 import { useAuth } from '../../auth/AuthProvider';
+import { Page } from '../../components/common/Page';
+import { DetailField, ReadOnlyDetail } from '../../components/common/ReadOnlyDetail';
 
 export function CustomerProfilePage() {
   const { user } = useAuth();
 
   return (
-    <Stack spacing={3}>
-      <Typography component="h1" variant="h4">
-        Profile
-      </Typography>
-      <Paper variant="outlined" sx={{ p: 2 }}>
-        <Stack spacing={1}>
-          <Typography>Name: {user?.name}</Typography>
-          <Typography>Email: {user?.email}</Typography>
-          <Typography>Phone Number: {user?.phoneNumber}</Typography>
-          <Typography>Role: {user?.role}</Typography>
-        </Stack>
-      </Paper>
-    </Stack>
+    <Page title="Profile">
+      <ReadOnlyDetail>
+        <DetailField label="Name:" value={user?.name} />
+        <DetailField label="Email:" value={user?.email} />
+        <DetailField label="Phone Number:" value={user?.phoneNumber} />
+        <DetailField label="Role:" value={user?.role} />
+      </ReadOnlyDetail>
+    </Page>
   );
 }

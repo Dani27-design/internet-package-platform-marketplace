@@ -15,13 +15,15 @@ export function PackageCard({ packageItem, onSelect }: PackageCardProps) {
           <Typography color="primary" variant="body2">
             {packageItem.provider}
           </Typography>
-          <Typography component="h3" variant="h6">
+          <Typography component="h3" sx={{ overflowWrap: 'anywhere' }} variant="h6">
             {packageItem.name}
           </Typography>
           <Typography color="text.secondary">
             {formatQuota(packageItem.quota)} • {formatValidity(packageItem.validityDays)}
           </Typography>
-          <Typography fontWeight={700}>{formatPrice(packageItem.price)}</Typography>
+          <Typography fontWeight={700} sx={{ overflowWrap: 'anywhere' }}>
+            {formatPrice(packageItem.price)}
+          </Typography>
         </Stack>
       </CardContent>
       <CardActions>

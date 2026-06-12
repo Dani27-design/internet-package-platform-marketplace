@@ -12,7 +12,9 @@
     "validate:data": "node scripts/validate-data.mjs",
     "validate:routes": "node scripts/validate-routes.mjs",
     "validate:customer": "node scripts/validate-customer.mjs",
-    "validate:seller": "node scripts/validate-seller.mjs"
+    "validate:seller": "node scripts/validate-seller.mjs",
+    "validate:responsive": "node scripts/validate-responsive.mjs",
+    "validate:design-system": "node scripts/validate-design-system.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

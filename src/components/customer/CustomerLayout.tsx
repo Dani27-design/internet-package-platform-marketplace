@@ -8,8 +8,11 @@ export function CustomerLayout() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>
-      <Box component="header" sx={{ bgcolor: 'background.paper', borderBottom: 1, borderColor: 'divider' }}>
-        <Container maxWidth="lg" sx={{ py: 2 }}>
+      <Box
+        component="header"
+        sx={{ bgcolor: 'background.paper', borderBottom: 1, borderColor: 'divider' }}
+      >
+        <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, py: 2 }}>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={2}
@@ -24,7 +27,17 @@ export function CustomerLayout() {
                 {user?.name}
               </Typography>
             </Box>
-            <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                flexWrap: 'wrap',
+                gap: 1,
+                '& .MuiButton-root': {
+                  minWidth: { xs: 'calc(50% - 8px)', sm: 'auto' },
+                },
+              }}
+            >
               {customerNavigationItems.map((item) => (
                 <Button
                   key={item.path}
@@ -48,7 +61,7 @@ export function CustomerLayout() {
           </Stack>
         </Container>
       </Box>
-      <Container maxWidth="lg" sx={{ py: 3 }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, py: { xs: 2, sm: 3 } }}>
         <Outlet />
       </Container>
     </Box>

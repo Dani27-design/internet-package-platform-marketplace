@@ -1,4 +1,5 @@
 import { Box, Paper, Typography } from '@mui/material';
+import { DetailField } from '../common/ReadOnlyDetail';
 import type { InternetPackage, Transaction, User } from '../../domain/types';
 import { formatDate, formatPrice } from '../../utils/formatters';
 
@@ -29,14 +30,23 @@ export function SellerTransactionList({
                 p: 2,
               }}
             >
-              <Typography fontWeight={700}>
-                {customer?.name ?? transaction.customerId}
-              </Typography>
-              <Typography color="text.secondary">
-                {packageItem?.name ?? transaction.packageId} •{' '}
-                {packageItem?.provider ?? 'Provider'} • {transaction.status} •{' '}
-                {formatPrice(transaction.amount)} • {formatDate(transaction.createdAt)}
-              </Typography>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gap: 1,
+                  gridTemplateColumns: {
+                    xs: '1fr',
+                    md: '1.2fr 1.2fr 1fr 0.8fr 1fr 1fr',
+                  },
+                }}
+              >
+                <DetailField label="Customer" value={customer?.name ?? transaction.customerId} />
+                <DetailField label="Package" value={packageItem?.name ?? transaction.packageId} />
+                <DetailField label="Provider" value={packageItem?.provider ?? 'Provider'} />
+                <DetailField label="Status" value={transaction.status} />
+                <DetailField label="Amount" value={formatPrice(transaction.amount)} />
+                <DetailField label="Purchase Date" value={formatDate(transaction.createdAt)} />
+              </Box>
             </Box>
           );
         })

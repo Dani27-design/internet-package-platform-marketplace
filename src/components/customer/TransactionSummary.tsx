@@ -1,4 +1,5 @@
-import { Paper, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import { DetailField, ReadOnlyDetail } from '../common/ReadOnlyDetail';
 import type { InternetPackage, Transaction } from '../../domain/types';
 import { formatDate, formatPrice } from '../../utils/formatters';
 
@@ -12,17 +13,17 @@ export function TransactionSummary({
   packageItem,
 }: TransactionSummaryProps) {
   return (
-    <Paper variant="outlined" sx={{ p: 2 }}>
+    <ReadOnlyDetail>
       <Stack spacing={1}>
         <Typography component="h2" variant="h6">
           Transaction Summary
         </Typography>
-        <Typography>Status: {transaction.status}</Typography>
-        <Typography>Purchase Date: {formatDate(transaction.createdAt)}</Typography>
-        <Typography>Package: {packageItem.name}</Typography>
-        <Typography>Provider: {packageItem.provider}</Typography>
-        <Typography>Amount: {formatPrice(transaction.amount)}</Typography>
+        <DetailField label="Status" value={transaction.status} />
+        <DetailField label="Purchase Date" value={formatDate(transaction.createdAt)} />
+        <DetailField label="Package" value={packageItem.name} />
+        <DetailField label="Provider" value={packageItem.provider} />
+        <DetailField label="Amount" value={formatPrice(transaction.amount)} />
       </Stack>
-    </Paper>
+    </ReadOnlyDetail>
   );
 }

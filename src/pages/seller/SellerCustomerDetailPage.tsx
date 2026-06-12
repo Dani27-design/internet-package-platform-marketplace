@@ -7,6 +7,7 @@ import {
   getPackages,
   getUsers,
 } from '../../api/queries';
+import { DetailField, ReadOnlyDetail } from '../../components/common/ReadOnlyDetail';
 import { SellerTransactionList } from '../../components/seller/SellerTransactionList';
 import { ROUTES } from '../../routes/paths';
 import { formatDate, formatQuota } from '../../utils/formatters';
@@ -51,39 +52,32 @@ export function SellerCustomerDetailPage() {
         Customer Detail
       </Typography>
 
-      <Paper variant="outlined" sx={{ p: 2 }}>
-        <Stack spacing={1}>
-          <Typography component="h2" variant="h6">
-            Customer Information
-          </Typography>
-          {customer ? (
-            <>
-              <Typography>Name: {customer.name}</Typography>
-              <Typography>Email: {customer.email}</Typography>
-              <Typography>Phone Number: {customer.phoneNumber}</Typography>
-            </>
-          ) : (
-            <Typography color="text.secondary">Customer not found</Typography>
-          )}
-        </Stack>
-      </Paper>
+      <ReadOnlyDetail title="Customer Information">
+        {customer ? (
+          <>
+            <DetailField label="Name" value={customer.name} />
+            <DetailField label="Email" value={customer.email} />
+            <DetailField label="Phone Number" value={customer.phoneNumber} />
+          </>
+        ) : (
+          <Typography color="text.secondary">Customer not found</Typography>
+        )}
+      </ReadOnlyDetail>
 
-      <Paper variant="outlined" sx={{ p: 2 }}>
-        <Stack spacing={1}>
-          <Typography component="h2" variant="h6">
-            Active Package
-          </Typography>
-          {activePackage && activePackageItem ? (
-            <>
-              <Typography>{activePackageItem.name}</Typography>
-              <Typography>Remaining Quota: {formatQuota(activePackage.remainingQuota)}</Typography>
-              <Typography>Expiry Date: {formatDate(activePackage.expiryDate)}</Typography>
-            </>
-          ) : (
-            <Typography color="text.secondary">No active package</Typography>
-          )}
-        </Stack>
-      </Paper>
+      <ReadOnlyDetail title="Active Package">
+        {activePackage && activePackageItem ? (
+          <>
+            <DetailField label="Package" value={activePackageItem.name} />
+            <DetailField
+              label="Remaining Quota"
+              value={formatQuota(activePackage.remainingQuota)}
+            />
+            <DetailField label="Expiry Date" value={formatDate(activePackage.expiryDate)} />
+          </>
+        ) : (
+          <Typography color="text.secondary">No active package</Typography>
+        )}
+      </ReadOnlyDetail>
 
       <Stack spacing={2}>
         <Typography component="h2" variant="h6">

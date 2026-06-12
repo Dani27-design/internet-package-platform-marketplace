@@ -1,10 +1,10 @@
 import {
   Box,
+  Button,
   Dialog,
   DialogContent,
   DialogTitle,
   Drawer,
-  IconButton,
   useMediaQuery,
 } from '@mui/material';
 import type { ReactNode } from 'react';
@@ -20,32 +20,57 @@ export function ResponsivePanel({ title, children, onClose }: ResponsivePanelPro
 
   if (isDesktop) {
     return (
-      <Dialog fullWidth maxWidth="sm" onClose={onClose} open>
+      <Dialog
+        aria-labelledby="responsive-panel-title"
+        fullWidth
+        maxWidth="sm"
+        onClose={onClose}
+        open
+      >
         <DialogTitle sx={{ pr: 6 }}>
-          {title}
-          <IconButton
-            aria-label="Close"
+          <Box id="responsive-panel-title">{title}</Box>
+          <Button
             onClick={onClose}
+            size="small"
             sx={{ position: 'absolute', right: 8, top: 8 }}
           >
-            X
-          </IconButton>
+            Close
+          </Button>
         </DialogTitle>
-        <DialogContent>{children}</DialogContent>
+        <DialogContent sx={{ pb: 3 }}>{children}</DialogContent>
       </Dialog>
     );
   }
 
   return (
-    <Drawer anchor="bottom" onClose={onClose} open>
-      <Box sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+    <Drawer
+      anchor="bottom"
+      ModalProps={{ keepMounted: true }}
+      onClose={onClose}
+      open
+      PaperProps={{
+        sx: {
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
+          maxHeight: '88vh',
+        },
+      }}
+    >
+      <Box sx={{ overflowY: 'auto', p: 2 }}>
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+            mb: 2,
+          }}
+        >
           <Box component="h2" sx={{ fontSize: 20, m: 0 }}>
             {title}
           </Box>
-          <IconButton aria-label="Close" onClick={onClose}>
-            X
-          </IconButton>
+          <Button onClick={onClose} size="small">
+            Close
+          </Button>
         </Box>
         {children}
       </Box>

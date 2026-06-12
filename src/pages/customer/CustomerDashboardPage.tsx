@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Paper,
   Stack,
   Typography,
@@ -13,8 +12,10 @@ import {
   getPackages,
 } from '../../api/queries';
 import { useAuth } from '../../auth/AuthProvider';
+import { Page, ResponsiveGrid } from '../../components/common/Page';
 import { ActivePackageWidget } from '../../components/customer/ActivePackageWidget';
 import { PackageCard } from '../../components/customer/PackageCard';
+import { ProviderEntry } from '../../components/customer/ProviderEntry';
 import { PROVIDERS } from '../../domain/constants';
 import type { InternetPackage } from '../../domain/types';
 import { ROUTES } from '../../routes/paths';
@@ -53,11 +54,7 @@ export function CustomerDashboardPage() {
   };
 
   return (
-    <Stack spacing={3}>
-      <Typography component="h1" variant="h4">
-        Dashboard
-      </Typography>
-
+    <Page title="Dashboard">
       {activePackage && activePackageItem ? (
         <ActivePackageWidget
           activePackage={activePackage}
@@ -92,15 +89,13 @@ export function CustomerDashboardPage() {
           </Typography>
           <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
             {PROVIDERS.map((provider) => (
-              <Button
+              <ProviderEntry
                 key={provider}
-                onClick={() =>
+                onSelect={() =>
                   navigate(`${ROUTES.customer.packages}?provider=${provider}`)
                 }
-                variant="outlined"
-              >
-                {provider}
-              </Button>
+                provider={provider}
+              />
             ))}
           </Stack>
         </Stack>
@@ -143,7 +138,7 @@ export function CustomerDashboardPage() {
           )}
         </Stack>
       </Paper>
-    </Stack>
+    </Page>
   );
 }
 
@@ -161,17 +156,7 @@ function PackageSection({
       <Typography component="h2" variant="h6">
         {title}
       </Typography>
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, minmax(0, 1fr))',
-            md: 'repeat(3, minmax(0, 1fr))',
-          },
-        }}
-      >
+      <ResponsiveGrid>
         {packages.map((packageItem) => (
           <PackageCard
             key={packageItem.id}
@@ -179,7 +164,7 @@ function PackageSection({
             onSelect={onSelect}
           />
         ))}
-      </Box>
+      </ResponsiveGrid>
     </Stack>
   );
 }

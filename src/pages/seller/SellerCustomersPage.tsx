@@ -7,6 +7,7 @@ import {
   getTransactions,
   getUsers,
 } from '../../api/queries';
+import { DetailField } from '../../components/common/ReadOnlyDetail';
 import { USER_ROLES } from '../../domain/constants';
 import { ROUTES } from '../../routes/paths';
 
@@ -69,16 +70,24 @@ export function SellerCustomersPage() {
                 p: 2,
               }}
             >
-              <Typography fontWeight={700}>{customer.name}</Typography>
-              <Typography color="text.secondary">
-                Phone Number: {customer.phoneNumber}
-              </Typography>
-              <Typography color="text.secondary">
-                Active Package: {packageItem?.name ?? 'No active package'}
-              </Typography>
-              <Typography color="text.secondary">
-                Total Transactions: {totalTransactions}
-              </Typography>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gap: 1,
+                  gridTemplateColumns: {
+                    xs: '1fr',
+                    md: '1.2fr 1fr 1.2fr 1fr',
+                  },
+                }}
+              >
+                <DetailField label="Name" value={customer.name} />
+                <DetailField label="Phone Number" value={customer.phoneNumber} />
+                <DetailField
+                  label="Active Package"
+                  value={packageItem?.name ?? 'No active package'}
+                />
+                <DetailField label="Total Transactions" value={`${totalTransactions}`} />
+              </Box>
             </Box>
           );
         })}

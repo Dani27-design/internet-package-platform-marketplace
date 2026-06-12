@@ -1,16 +1,16 @@
 import {
-  Box,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   Stack,
   TextField,
-  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getPackages } from '../../api/queries';
+import { Page, ResponsiveGrid } from '../../components/common/Page';
+import { EmptyState } from '../../components/common/QueryState';
 import { PackageCard } from '../../components/customer/PackageCard';
 import { PROVIDERS } from '../../domain/constants';
 import type { Provider } from '../../domain/types';
@@ -51,11 +51,7 @@ export function PackageCatalogPage() {
   };
 
   return (
-    <Stack spacing={3}>
-      <Typography component="h1" variant="h4">
-        Packages
-      </Typography>
-
+    <Page title="Packages">
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <TextField
           fullWidth
@@ -82,17 +78,7 @@ export function PackageCatalogPage() {
       </Stack>
 
       {filteredPackages.length > 0 ? (
-        <Box
-          sx={{
-            display: 'grid',
-            gap: 2,
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: 'repeat(2, minmax(0, 1fr))',
-              md: 'repeat(3, minmax(0, 1fr))',
-            },
-          }}
-        >
+        <ResponsiveGrid>
           {filteredPackages.map((packageItem) => (
             <PackageCard
               key={packageItem.id}
@@ -102,10 +88,10 @@ export function PackageCatalogPage() {
               }
             />
           ))}
-        </Box>
+        </ResponsiveGrid>
       ) : (
-        <Typography color="text.secondary">No packages found</Typography>
+        <EmptyState message="No packages found" />
       )}
-    </Stack>
+    </Page>
   );
 }

@@ -1067,38 +1067,42 @@ Status: Done.
 
 ## Phase 5 Task List: Responsive Optimization
 
-| Task ID | Task | Purpose | Dependencies | Output | Acceptance Criteria |
-|---|---|---|---|---|---|
-| R-01 | Define responsive breakpoint rules | Standardize mobile and desktop behavior | MUI, PRD responsive strategy | Breakpoint usage convention | Customer mobile and desktop interaction rules are consistent |
-| R-02 | Apply mobile-first customer layouts | Match PRD priority | Customer pages | Mobile customer layouts | Customer dashboard, catalog, transactions, and profile are usable on mobile |
-| R-03 | Expand customer layouts for desktop | Support larger screens | Customer mobile layouts | Desktop customer layouts | Desktop adds space without changing PRD feature scope |
-| R-04 | Validate package detail modal on desktop | Confirm PRD desktop behavior | Package Detail | Desktop modal behavior | Detail opens as modal on desktop viewport |
-| R-05 | Validate package detail bottom sheet on mobile | Confirm PRD mobile behavior | Package Detail | Mobile bottom sheet behavior | Detail opens as bottom sheet on mobile viewport |
-| R-06 | Validate checkout modal on desktop | Confirm PRD desktop behavior | Checkout | Desktop modal behavior | Checkout opens as modal on desktop viewport |
-| R-07 | Validate checkout bottom sheet on mobile | Confirm PRD mobile behavior | Checkout | Mobile bottom sheet behavior | Checkout opens as bottom sheet on mobile viewport |
-| R-08 | Apply desktop-first seller layouts | Match PRD priority | Seller pages | Desktop seller layouts | Seller dashboard, customers, customer detail, and transactions prioritize desktop usability |
-| R-09 | Implement seller desktop drawer behavior | Match PRD seller strategy | Seller navigation | Drawer navigation | Seller desktop uses pages and drawer behavior |
-| R-10 | Adapt seller views to mobile | Preserve access on small screens | Seller layouts | Responsive seller layouts | Seller pages remain usable on mobile |
-| R-11 | Check responsive table/list behavior | Prevent unreadable seller monitoring views | Transactions and customers data | Responsive list/table behavior | Required fields remain readable without adding export or CRUD |
-| R-12 | Check modal and bottom sheet accessibility basics | Keep interactions operable | Modal and sheet components | Focus and close behavior | Dialogs can be opened, closed, and navigated predictably |
+Status: Done.
+
+| Task ID | Status | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|---|
+| R-01 | Done | Define responsive breakpoint rules | Standardize mobile and desktop behavior | MUI, PRD responsive strategy | Breakpoint usage convention | Customer mobile and desktop interaction rules are consistent |
+| R-02 | Done | Apply mobile-first customer layouts | Match PRD priority | Customer pages | Mobile customer layouts | Customer dashboard, catalog, transactions, and profile are usable on mobile |
+| R-03 | Done | Expand customer layouts for desktop | Support larger screens | Customer mobile layouts | Desktop customer layouts | Desktop adds space without changing PRD feature scope |
+| R-04 | Done | Validate package detail modal on desktop | Confirm PRD desktop behavior | Package Detail | Desktop modal behavior | Detail opens as modal on desktop viewport |
+| R-05 | Done | Validate package detail bottom sheet on mobile | Confirm PRD mobile behavior | Package Detail | Mobile bottom sheet behavior | Detail opens as bottom sheet on mobile viewport |
+| R-06 | Done | Validate checkout modal on desktop | Confirm PRD desktop behavior | Checkout | Desktop modal behavior | Checkout opens as modal on desktop viewport |
+| R-07 | Done | Validate checkout bottom sheet on mobile | Confirm PRD mobile behavior | Checkout | Mobile bottom sheet behavior | Checkout opens as bottom sheet on mobile viewport |
+| R-08 | Done | Apply desktop-first seller layouts | Match PRD priority | Seller pages | Desktop seller layouts | Seller dashboard, customers, customer detail, and transactions prioritize desktop usability |
+| R-09 | Done | Implement seller desktop drawer behavior | Match PRD seller strategy | Seller navigation | Drawer navigation | Seller desktop uses pages and drawer behavior |
+| R-10 | Done | Adapt seller views to mobile | Preserve access on small screens | Seller layouts | Responsive seller layouts | Seller pages remain usable on mobile |
+| R-11 | Done | Check responsive table/list behavior | Prevent unreadable seller monitoring views | Transactions and customers data | Responsive list/table behavior | Required fields remain readable without adding export or CRUD |
+| R-12 | Done | Check modal and bottom sheet accessibility basics | Keep interactions operable | Modal and sheet components | Focus and close behavior | Dialogs can be opened, closed, and navigated predictably |
 
 ## Phase 6 Task List: Design System
 
-| Task ID | Task | Purpose | Dependencies | Output | Acceptance Criteria |
-|---|---|---|---|---|---|
-| DS-01 | Define MUI theme baseline | Establish consistent implementation layer | MUI | Theme configuration | Theme supports all PRD pages without adding visual-only scope |
-| DS-02 | Create app shell layouts | Support role-specific portals | IA, routing | Customer and seller shells | Shells contain only PRD navigation items |
-| DS-03 | Create authentication form pattern | Support register and login | Auth screens | Shared form structure | Register and login use consistent form behavior |
-| DS-04 | Create package card component | Reuse package summaries | Package card requirements | Package card | Displays provider, package name, quota, validity, and price |
-| DS-05 | Create active package component | Reuse quota display | Active package requirements | Active package widget | Displays required active package fields |
-| DS-06 | Create transaction list pattern | Reuse transaction displays | Transaction requirements | Transaction list component | Supports customer and seller required transaction fields |
-| DS-07 | Create KPI card pattern | Support seller analytics | Seller KPI requirements | KPI card component | Displays KPI label and value |
-| DS-08 | Create provider entry pattern | Support explore by provider | Provider constants | Provider entry component | Uses only supported providers |
-| DS-09 | Create modal pattern | Support desktop package detail and checkout | Responsive strategy | Reusable modal component | Desktop modal behavior works for detail and checkout |
-| DS-10 | Create bottom sheet pattern | Support mobile package detail and checkout | Responsive strategy | Reusable bottom sheet component | Mobile bottom sheet behavior works for detail and checkout |
-| DS-11 | Create read-only detail pattern | Support profile, transaction, and seller customer detail | Screen breakdown | Detail section component | Read-only content does not expose edit controls |
-| DS-12 | Create empty/loading/error states | Handle query states | React Query | State components | States do not introduce out-of-scope actions |
-| DS-13 | Document component usage boundaries | Prevent scope drift | Non-goals | Usage notes | Components are mapped to PRD pages and features |
+Status: Done.
+
+| Task ID | Status | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|---|
+| DS-01 | Done | Define MUI theme baseline | Establish consistent implementation layer | MUI | Theme configuration | Theme supports all PRD pages without adding visual-only scope |
+| DS-02 | Done | Create app shell layouts | Support role-specific portals | IA, routing | Customer and seller shells | Shells contain only PRD navigation items |
+| DS-03 | Done | Create authentication form pattern | Support register and login | Auth screens | Shared form structure | Register and login use consistent form behavior |
+| DS-04 | Done | Create package card component | Reuse package summaries | Package card requirements | Package card | Displays provider, package name, quota, validity, and price |
+| DS-05 | Done | Create active package component | Reuse quota display | Active package requirements | Active package widget | Displays required active package fields |
+| DS-06 | Done | Create transaction list pattern | Reuse transaction displays | Transaction requirements | Transaction list component | Supports customer and seller required transaction fields |
+| DS-07 | Done | Create KPI card pattern | Support seller analytics | Seller KPI requirements | KPI card component | Displays KPI label and value |
+| DS-08 | Done | Create provider entry pattern | Support explore by provider | Provider constants | Provider entry component | Uses only supported providers |
+| DS-09 | Done | Create modal pattern | Support desktop package detail and checkout | Responsive strategy | Reusable modal component | Desktop modal behavior works for detail and checkout |
+| DS-10 | Done | Create bottom sheet pattern | Support mobile package detail and checkout | Responsive strategy | Reusable bottom sheet component | Mobile bottom sheet behavior works for detail and checkout |
+| DS-11 | Done | Create read-only detail pattern | Support profile, transaction, and seller customer detail | Screen breakdown | Detail section component | Read-only content does not expose edit controls |
+| DS-12 | Done | Create empty/loading/error states | Handle query states | React Query | State components | States do not introduce out-of-scope actions |
+| DS-13 | Done | Document component usage boundaries | Prevent scope drift | Non-goals | Usage notes | Components are mapped to PRD pages and features |
 
 ## Phase 7 Task List: Validation
 
