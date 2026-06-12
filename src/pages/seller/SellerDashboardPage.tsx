@@ -37,15 +37,58 @@ export function SellerDashboardPage() {
   const topPackages = getTopPackages(transactions, packages);
 
   return (
-    <Stack spacing={3}>
-      <Typography component="h1" variant="h4">
+    <Stack spacing={{ xs: 1.75, md: 2 }}>
+      <Typography
+        component="h1"
+        sx={{
+          border: 0,
+          clip: 'rect(0 0 0 0)',
+          height: 1,
+          m: -1,
+          overflow: 'hidden',
+          p: 0,
+          position: 'absolute',
+          width: 1,
+        }}
+      >
         Seller Dashboard
       </Typography>
+
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        spacing={0.75}
+        sx={{ alignItems: { xs: 'flex-start', sm: 'flex-end' }, justifyContent: 'space-between' }}
+      >
+        <Box>
+          <Typography
+            sx={{
+              color: 'text.secondary',
+              fontSize: '0.82rem',
+              fontWeight: 900,
+            }}
+          >
+            Business overview
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: { xs: '1.45rem', md: '1.9rem' },
+              fontWeight: 950,
+              letterSpacing: 0,
+              lineHeight: 1.05,
+            }}
+          >
+            Sales, customers, and network performance
+          </Typography>
+        </Box>
+        <Typography color="text.secondary" sx={{ fontWeight: 800 }} variant="body2">
+          Read-only analytics
+        </Typography>
+      </Stack>
 
       <Box
         sx={{
           display: 'grid',
-          gap: 2,
+          gap: { xs: 1.25, md: 1.5 },
           gridTemplateColumns: {
             xs: '1fr',
             sm: 'repeat(2, minmax(0, 1fr))',
@@ -53,13 +96,27 @@ export function SellerDashboardPage() {
           },
         }}
       >
-        <KpiCard label="Total Customers" value={`${getTotalCustomers(users)}`} />
         <KpiCard
+          accent="#2f5bd8"
+          helper="Registered buyers"
+          label="Total Customers"
+          value={`${getTotalCustomers(users)}`}
+        />
+        <KpiCard
+          accent="#7c3aed"
+          helper="All purchase records"
           label="Total Transactions"
           value={`${getTotalTransactions(transactions)}`}
         />
-        <KpiCard label="Total Revenue" value={formatPrice(getTotalRevenue(transactions))} />
         <KpiCard
+          accent="#ef3b45"
+          helper="Gross order value"
+          label="Total Revenue"
+          value={formatPrice(getTotalRevenue(transactions))}
+        />
+        <KpiCard
+          accent="#2f7d73"
+          helper="Successful orders"
           label="Transaction Success Rate"
           value={formatPercentage(getTransactionSuccessRate(transactions))}
         />
@@ -68,7 +125,7 @@ export function SellerDashboardPage() {
       <Box
         sx={{
           display: 'grid',
-          gap: 2,
+          gap: { xs: 1.25, md: 1.5 },
           gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
         }}
       >
@@ -89,9 +146,10 @@ export function SellerDashboardPage() {
       </Box>
 
       <Stack spacing={2}>
-        <Typography component="h2" variant="h6">
-          Recent Transactions
-        </Typography>
+        <SectionHeader
+          eyebrow="Latest activity"
+          title="Recent Transactions"
+        />
         <SellerTransactionList
           packagesById={packagesById}
           transactions={recentTransactions}
@@ -109,26 +167,73 @@ function RankingSection({
   title: string;
   rows: Array<{ label: string; value: string }>;
 }) {
+  const maxValue = Math.max(
+    ...rows.map((row) => Number(row.value.replace(/[^0-9]/g, ''))),
+    1,
+  );
+
   return (
-    <Paper variant="outlined" sx={{ p: 2 }}>
+    <Paper
+      variant="outlined"
+      sx={{
+        bgcolor: 'rgba(255,255,255,0.9)',
+        borderColor: 'rgba(15, 23, 42, 0.08)',
+        boxShadow: '0 18px 48px rgba(15, 23, 42, 0.06)',
+        p: { xs: 1.5, md: 2 },
+      }}
+    >
       <Stack spacing={1.5}>
-        <Typography component="h2" variant="h6">
-          {title}
-        </Typography>
+        <SectionHeader title={title} />
         {rows.length > 0 ? (
           rows.map((row) => (
-            <Box
-              key={row.label}
-              sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}
-            >
-              <Typography>{row.label}</Typography>
-              <Typography fontWeight={700}>{row.value}</Typography>
-            </Box>
+            <Stack key={row.label} spacing={0.75}>
+              <Box sx={{ alignItems: 'center', display: 'flex', gap: 2 }}>
+                <Typography sx={{ flex: 1, fontWeight: 900 }}>{row.label}</Typography>
+                <Typography sx={{ fontWeight: 950 }}>{row.value}</Typography>
+              </Box>
+              <Box
+                sx={{
+                  bgcolor: 'rgba(15, 23, 42, 0.06)',
+                  borderRadius: '999px',
+                  height: 7,
+                  overflow: 'hidden',
+                }}
+              >
+                <Box
+                  sx={{
+                    bgcolor: '#2f5bd8',
+                    borderRadius: '999px',
+                    height: '100%',
+                    width: `${Math.max(
+                      12,
+                      (Number(row.value.replace(/[^0-9]/g, '')) / maxValue) * 100,
+                    )}%`,
+                  }}
+                />
+              </Box>
+            </Stack>
           ))
         ) : (
-          <Typography color="text.secondary">No data</Typography>
+          <Typography color="text.secondary" sx={{ fontWeight: 700 }}>
+            No data
+          </Typography>
         )}
       </Stack>
     </Paper>
+  );
+}
+
+function SectionHeader({ eyebrow, title }: { eyebrow?: string; title: string }) {
+  return (
+    <Box>
+      {eyebrow ? (
+        <Typography color="text.secondary" sx={{ fontWeight: 850 }} variant="caption">
+          {eyebrow}
+        </Typography>
+      ) : null}
+      <Typography component="h2" sx={{ fontSize: '1.15rem', fontWeight: 950 }}>
+        {title}
+      </Typography>
+    </Box>
   );
 }

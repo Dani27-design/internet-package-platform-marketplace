@@ -8,8 +8,17 @@ type ReadOnlyDetailProps = {
 
 export function ReadOnlyDetail({ title, children }: ReadOnlyDetailProps) {
   return (
-    <Paper variant="outlined" sx={{ p: 2 }}>
-      <Stack spacing={1}>
+    <Paper
+      variant="outlined"
+      sx={{
+        bgcolor: '#ffffff',
+        borderColor: 'rgba(15, 23, 42, 0.08)',
+        borderRadius: 2,
+        boxShadow: '0 14px 34px rgba(15, 23, 42, 0.06)',
+        p: { xs: 1.25, sm: 2 },
+      }}
+    >
+      <Stack spacing={1.25}>
         {title ? (
           <Typography component="h2" variant="h6">
             {title}
@@ -28,11 +37,22 @@ type DetailFieldProps = {
 
 export function DetailField({ label, value }: DetailFieldProps) {
   return (
-    <Box sx={{ minWidth: 0 }}>
-      <Typography color="text.secondary" variant="caption">
+    <Box
+      sx={{
+        bgcolor: '#f8fafc',
+        border: 1,
+        borderColor: 'rgba(15, 23, 42, 0.06)',
+        borderRadius: 1.25,
+        minWidth: 0,
+        p: 1.25,
+      }}
+    >
+      <Typography color="text.secondary" fontWeight={800} variant="caption">
         {label}
       </Typography>
-      <Typography sx={{ overflowWrap: 'anywhere' }}>{value}</Typography>
+      <Typography fontWeight={850} sx={{ mt: 0.25, overflowWrap: 'anywhere' }}>
+        {value}
+      </Typography>
     </Box>
   );
 }

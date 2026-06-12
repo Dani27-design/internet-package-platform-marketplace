@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { getPackages, getTransactions, getUsers } from '../../api/queries';
 import { SellerTransactionList } from '../../components/seller/SellerTransactionList';
@@ -23,10 +23,23 @@ export function SellerTransactionsPage() {
   );
 
   return (
-    <Stack spacing={3}>
-      <Typography component="h1" variant="h4">
-        Transactions
-      </Typography>
+    <Stack spacing={{ xs: 2, md: 2.5 }}>
+      <Box>
+        <Typography color="text.secondary" sx={{ fontWeight: 850 }} variant="caption">
+          Purchase ledger
+        </Typography>
+        <Typography
+          component="h1"
+          sx={{
+            fontSize: { xs: '1.55rem', md: '1.95rem' },
+            fontWeight: 950,
+            letterSpacing: 0,
+            lineHeight: 1.05,
+          }}
+        >
+          Transactions
+        </Typography>
+      </Box>
       <SellerTransactionList
         packagesById={packagesById}
         transactions={transactionsQuery.data ?? []}

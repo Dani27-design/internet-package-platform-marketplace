@@ -1038,6 +1038,17 @@ Status: Done.
 | C-35 | Done | Implement Customer Profile | Show customer account details | Authenticated customer | Profile page | Profile displays name, email, phone number, and role |
 | C-36 | Done | Exclude profile editing | Preserve PRD non-scope | Profile PRD | Read-only profile | No edit action appears |
 | C-37 | Done | Verify customer page-per-visit path | Validate success metric flow | Customer pages | End-to-end flow check | Dashboard to catalog to detail to checkout to transaction view works |
+| C-38 | Done | Refine Customer Dashboard visual presentation | Improve customer engagement and discovery quality without changing PRD scope | Customer Dashboard PRD sections, active package data, package cards, provider exploration, recent transactions | Polished customer dashboard layout, active package treatment, package cards, provider entries, and recent transaction rows | Dashboard still contains Active Package, Popular Packages, Featured Packages, Best Value Packages, Explore By Provider, and Recent Transactions while improving hierarchy, scanability, and responsive presentation |
+| C-39 | Done | Redesign Customer Dashboard as marketplace-style customer experience | Make the customer portal feel like a real internet package marketplace while preserving PRD scope | Customer Dashboard PRD sections, supported providers, customer mobile-first strategy | Marketplace-style customer shell, provider-colored package cards, full-width discovery sections, non-overlapping header, improved provider and transaction cards | Visible page title is customer-oriented, navigation still contains Dashboard, Packages, Transactions, and Profile, and dashboard still includes Active Package, Popular Packages, Featured Packages, Best Value Packages, Explore By Provider, and Recent Transactions |
+| C-40 | Done | Convert Customer Dashboard to compact telecom storefront | Improve desktop density and reduce jumbo dashboard treatment while preserving PRD scope | Customer Dashboard PRD sections, active package widget, package cards, provider exploration, recent transactions | Compact storefront page title, account summary-style active package, denser product cards, tighter provider and transaction sections | Customer dashboard no longer uses oversized hero treatment, package discovery remains prominent, and all PRD-required dashboard sections and actions remain available |
+| C-41 | Done | Apply modern professional customer UI redesign | Replace overly playful/basic dashboard styling with a cleaner modern marketplace presentation | Customer Dashboard PRD sections, active package widget, package cards, provider exploration, recent transactions | Modern neutral customer shell, light active package summary, restrained provider accents, cleaner product cards, consistent provider and transaction tiles | Dashboard keeps all PRD-required sections and actions while avoiding jumbo typography, heavy dark hero treatment, rounded display-font styling, and basic template-like cards |
+| C-42 | Done | Redesign Customer Dashboard as modern subscription hub | Shift customer experience toward modern telco, fintech, and subscription app patterns while preserving PRD scope | Customer Dashboard PRD sections, active package widget, package cards, provider exploration, recent transactions | Split subscription summary card, colored subscription plan cards, grouped discovery layout, app-like provider tiles, subscription-style transaction rows | Dashboard keeps Active Package, Popular Packages, Featured Packages, Best Value Packages, Explore By Provider, and Recent Transactions while using only PRD-required data and actions |
+| C-43 | Done | Remove redundant customer dashboard UI copy | Reduce repeated static labels and duplicated information while preserving PRD-required data | Active package widget, package cards, provider exploration | Active package summary without duplicate expiry, package cards without repeated package name rows, provider entries without repeated helper text | Required package, quota, validity, price, usage, expiry, provider, and transaction data remain visible without redundant static text |
+| C-44 | Done | Recompose Customer Dashboard into flatter telco account UI | Replace fragmented floating-card styling with a more coherent modern telco account composition | Customer Dashboard PRD sections, active package widget, package cards, provider exploration, recent transactions | Integrated quota gauge active package module, flatter plan comparison cards, flat provider controls, flatter transaction rows | Dashboard preserves all PRD-required sections and data while reducing decorative shadows, awkward split-card treatment, and redundant static UI copy |
+| C-45 | Done | Re-architect Customer Dashboard around customer decision flow | Align dashboard structure with current plan awareness, next actions, package discovery, provider exploration, and account activity | Customer Dashboard PRD sections, package group flags, provider entry routes, transaction routes | Current plan first, explicit next-action module second, tabbed Recommended Packages module, provider discovery, recent transactions | Dashboard keeps all PRD-required sections while Popular Packages, Featured Packages, and Best Value Packages are consolidated into one recommendation module that supports discovery and page-per-visit |
+| C-46 | Done | Refine dashboard recommendation priority and provider action | Align dashboard behavior with discovery and conversion priorities | Recommended Packages module, Provider Discovery section | Best Value selected first, provider action moves customer to provider choices instead of assuming one provider | Recommended Packages prioritizes Best Value, retains Popular and Featured, and Browse Providers guides the customer to the provider discovery section |
+| C-47 | Done | Establish customer UI rescue foundation | Stop patch-driven visual iteration and define the customer experience reset before further UI work | PRD goals, Customer Dashboard requirements, previous design critique | `docs/customer-ui-rescue-foundation.md` | Foundation defines product direction, dashboard narrative, approved hierarchy, section strategy, discovery rules, content rules, conversion rules, mobile rules, and non-scope guardrails |
+| C-48 | Done | Apply customer UI rescue foundation to dashboard implementation | Bring Customer Dashboard implementation into alignment with the approved rescue foundation hierarchy | `docs/customer-ui-rescue-foundation.md`, Customer Dashboard implementation | Dashboard sequence follows Current Package Status, Recommended Next Actions, Recommended Packages, Provider Discovery, and Recent Transactions | Dashboard supports the PRD page-per-visit path while preserving required sections, package data, provider routes, and transaction routes |
 
 ## Phase 4 Task List: Seller Portal UX
 
@@ -1106,25 +1117,35 @@ Status: Done.
 
 ## Phase 7 Task List: Validation
 
-| Task ID | Task | Purpose | Dependencies | Output | Acceptance Criteria |
-|---|---|---|---|---|---|
-| V-01 | Validate PRD feature coverage | Confirm in-scope delivery | Completed implementation | Coverage checklist | Every in-scope feature is accounted for |
-| V-02 | Validate non-goal exclusion | Prevent scope creep | Completed implementation | Non-goal checklist | No cart, wishlist, coupons, notifications, chat, real payments, CRUD, export, multi-language, real quota, or telecom integration exists |
-| V-03 | Validate customer auth flow | Confirm customer access | Mock auth | Auth test result | Customer can register or log in and access customer portal |
-| V-04 | Validate seller auth flow | Confirm seller access | Mock auth | Auth test result | Seller can log in and access seller portal |
-| V-05 | Validate role-based access | Confirm portal separation | Route guards | Access control result | Customer cannot access seller pages; seller cannot access customer pages |
-| V-06 | Validate customer page-per-visit flow | Confirm primary success metric path | Customer pages | Flow result | Dashboard → package catalog → package detail → checkout → transaction view works |
-| V-07 | Validate package discovery | Confirm exploration behavior | Dashboard and catalog | Discovery result | Customers can browse dashboard package sections, explore by provider, search, and filter |
-| V-08 | Validate checkout completion | Confirm purchase flow | Checkout and transactions | Checkout result | Confirm purchase creates a transaction and shows success |
-| V-09 | Validate customer transactions | Confirm history access | Transactions | Transaction result | Customer sees own transactions and can open transaction view |
-| V-10 | Validate customer profile | Confirm profile scope | Profile | Profile result | Profile shows name, email, phone number, and role; no edit action exists |
-| V-11 | Validate seller dashboard analytics | Confirm business visibility | Seller dashboard | Analytics result | KPI summary, top providers, top packages, and recent transactions render from mock data |
-| V-12 | Validate seller customer monitoring | Confirm monitoring efficiency | Seller customers | Monitoring result | Seller can view customers and open customer detail |
-| V-13 | Validate seller transaction monitoring | Confirm transaction visibility | Seller transactions | Monitoring result | Seller can view customer, package, provider, status, amount, and purchase date |
-| V-14 | Validate customer responsive behavior | Confirm mobile-first strategy | Customer portal | Responsive result | Detail and checkout use desktop modal and mobile bottom sheet |
-| V-15 | Validate seller responsive behavior | Confirm desktop-first strategy | Seller portal | Responsive result | Seller desktop uses pages and drawer, mobile remains responsive |
-| V-16 | Validate data integrity | Confirm mock data reliability | JSON Server data | Data integrity result | Users, packages, transactions, and active packages references are valid |
-| V-17 | Validate deployment readiness | Confirm technical scope readiness | Frontend and JSON Server | Deployment checklist | Frontend and mock API can be deployed according to PRD technical scope |
+Status: Done.
+
+| Task ID | Status | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|---|
+| V-01 | Done | Validate PRD feature coverage | Confirm in-scope delivery | Completed implementation | Coverage checklist | Every in-scope feature is accounted for |
+| V-02 | Done | Validate non-goal exclusion | Prevent scope creep | Completed implementation | Non-goal checklist | No cart, wishlist, coupons, notifications, chat, real payments, CRUD, export, multi-language, real quota, or telecom integration exists |
+| V-03 | Done | Validate customer auth flow | Confirm customer access | Mock auth | Auth test result | Customer can register or log in and access customer portal |
+| V-04 | Done | Validate seller auth flow | Confirm seller access | Mock auth | Auth test result | Seller can log in and access seller portal |
+| V-05 | Done | Validate role-based access | Confirm portal separation | Route guards | Access control result | Customer cannot access seller pages; seller cannot access customer pages |
+| V-06 | Done | Validate customer page-per-visit flow | Confirm primary success metric path | Customer pages | Flow result | Dashboard to package catalog to package detail to checkout to transaction view works |
+| V-07 | Done | Validate package discovery | Confirm exploration behavior | Dashboard and catalog | Discovery result | Customers can browse dashboard package sections, explore by provider, search, and filter |
+| V-08 | Done | Validate checkout completion | Confirm purchase flow | Checkout and transactions | Checkout result | Confirm purchase creates a transaction and shows success |
+| V-09 | Done | Validate customer transactions | Confirm history access | Transactions | Transaction result | Customer sees own transactions and can open transaction view |
+| V-10 | Done | Validate customer profile | Confirm profile scope | Profile | Profile result | Profile shows name, email, phone number, and role; no edit action exists |
+| V-11 | Done | Validate seller dashboard analytics | Confirm business visibility | Seller dashboard | Analytics result | KPI summary, top providers, top packages, and recent transactions render from mock data |
+| V-12 | Done | Validate seller customer monitoring | Confirm monitoring efficiency | Seller customers | Monitoring result | Seller can view customers and open customer detail |
+| V-13 | Done | Validate seller transaction monitoring | Confirm transaction visibility | Seller transactions | Monitoring result | Seller can view customer, package, provider, status, amount, and purchase date |
+| V-14 | Done | Validate customer responsive behavior | Confirm mobile-first strategy | Customer portal | Responsive result | Detail and checkout use desktop modal and mobile bottom sheet |
+| V-15 | Done | Validate seller responsive behavior | Confirm desktop-first strategy | Seller portal | Responsive result | Seller desktop uses pages and drawer, mobile remains responsive |
+| V-16 | Done | Validate data integrity | Confirm mock data reliability | JSON Server data | Data integrity result | Users, packages, transactions, and active packages references are valid |
+| V-17 | Done | Validate deployment readiness | Confirm technical scope readiness | Frontend and JSON Server | Deployment checklist | Frontend and mock API can be deployed according to PRD technical scope |
+
+Post-validation remediation:
+
+- Done: Replaced placeholder login and register routes with working mock-auth forms.
+- Done: Login redirects customers to Customer Dashboard and sellers to Seller Dashboard.
+- Done: Register creates customer accounts only.
+- Done: Final validation rejects placeholder auth pages.
+- Done: Improved auth UI presentation with marketplace context and PRD-supported provider cues without adding new auth features.
 
 # Phase 1
 

@@ -16,6 +16,9 @@ const files = {
   kpiCard: '../src/components/seller/KpiCard.tsx',
   providerEntry: '../src/components/customer/ProviderEntry.tsx',
   responsivePanel: '../src/components/customer/ResponsivePanel.tsx',
+  loginPage: '../src/pages/auth/LoginPage.tsx',
+  registerPage: '../src/pages/auth/RegisterPage.tsx',
+  authLayout: '../src/components/auth/AuthLayout.tsx',
 };
 
 const sourceEntries = await Promise.all(
@@ -97,6 +100,32 @@ const errors = [];
     errors.push(`provider entry missing ${requiredText}`);
   }
 });
+
+['AuthLayout', 'TextField', 'login(email, password)', 'Demo accounts'].forEach(
+  (requiredText) => {
+    if (!source.loginPage.includes(requiredText)) {
+      errors.push(`login form pattern missing ${requiredText}`);
+    }
+  },
+);
+
+['AuthLayout', 'TextField', 'registerCustomer', 'Customer registration only'].forEach((requiredText) => {
+  if (!source.registerPage.includes(requiredText)) {
+    errors.push(`register form pattern missing ${requiredText}`);
+  }
+});
+
+['Internet Package Marketplace', 'PROVIDERS', 'Supported providers'].forEach(
+  (requiredText) => {
+    if (!source.authLayout.includes(requiredText)) {
+      errors.push(`auth layout missing ${requiredText}`);
+    }
+  },
+);
+
+if (source.loginPage.includes('PlaceholderPage') || source.registerPage.includes('PlaceholderPage')) {
+  errors.push('auth form pattern must not use placeholder pages');
+}
 
 ['Dialog', 'Drawer'].forEach((requiredText) => {
   if (!source.responsivePanel.includes(requiredText)) {

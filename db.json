@@ -3,16 +3,16 @@
     {
       "id": "user-customer-1",
       "role": "customer",
-      "name": "Alya Pratama",
-      "email": "alya@example.com",
+      "name": "Dani Chusyaidin",
+      "email": "dani@example.com",
       "phoneNumber": "081234567890",
       "password": "customer123"
     },
     {
       "id": "user-customer-2",
       "role": "customer",
-      "name": "Bima Santoso",
-      "email": "bima@example.com",
+      "name": "Nur Marini",
+      "email": "nur@example.com",
       "phoneNumber": "081298765432",
       "password": "customer123"
     },
@@ -36,7 +36,11 @@
       "isPopular": true,
       "isFeatured": true,
       "isBestValue": false,
-      "benefits": ["25GB internet quota", "30 days validity", "Multi-network access"]
+      "benefits": [
+        "25GB internet quota",
+        "30 days validity",
+        "Multi-network access"
+      ]
     },
     {
       "id": "pkg-xl-40gb",
@@ -48,7 +52,11 @@
       "isPopular": true,
       "isFeatured": false,
       "isBestValue": true,
-      "benefits": ["40GB internet quota", "30 days validity", "Best value package"]
+      "benefits": [
+        "40GB internet quota",
+        "30 days validity",
+        "Best value package"
+      ]
     },
     {
       "id": "pkg-indosat-18gb",
@@ -60,7 +68,11 @@
       "isPopular": false,
       "isFeatured": true,
       "isBestValue": false,
-      "benefits": ["18GB internet quota", "30 days validity", "Featured package"]
+      "benefits": [
+        "18GB internet quota",
+        "30 days validity",
+        "Featured package"
+      ]
     },
     {
       "id": "pkg-tri-30gb",
@@ -72,7 +84,11 @@
       "isPopular": true,
       "isFeatured": false,
       "isBestValue": true,
-      "benefits": ["30GB internet quota", "30 days validity", "Best value package"]
+      "benefits": [
+        "30GB internet quota",
+        "30 days validity",
+        "Best value package"
+      ]
     },
     {
       "id": "pkg-smartfren-12gb",
@@ -84,7 +100,11 @@
       "isPopular": false,
       "isFeatured": true,
       "isBestValue": false,
-      "benefits": ["12GB internet quota", "14 days validity", "Featured package"]
+      "benefits": [
+        "12GB internet quota",
+        "14 days validity",
+        "Featured package"
+      ]
     }
   ],
   "transactions": [
@@ -119,6 +139,30 @@
       "amount": 35000,
       "status": "failed",
       "createdAt": "2026-06-10T08:45:00.000Z"
+    },
+    {
+      "id": "apqoUC43kpU",
+      "customerId": "user-customer-1",
+      "packageId": "pkg-xl-40gb",
+      "amount": 95000,
+      "status": "success",
+      "createdAt": "2026-06-12T22:56:18.697Z"
+    },
+    {
+      "id": "dJZRSxmySQ4",
+      "customerId": "user-customer-1",
+      "packageId": "pkg-telkomsel-25gb",
+      "amount": 75000,
+      "status": "success",
+      "createdAt": "2026-06-12T22:57:44.941Z"
+    },
+    {
+      "id": "YIlpPxw7K24",
+      "customerId": "user-customer-1",
+      "packageId": "pkg-xl-40gb",
+      "amount": 95000,
+      "status": "success",
+      "createdAt": "2026-06-12T22:58:11.752Z"
     }
   ],
   "activePackages": [
@@ -138,5 +182,6 @@
       "remainingQuota": 18,
       "expiryDate": "2026-07-04T23:59:59.000Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
