@@ -935,6 +935,193 @@ Drawer Strategy:
 - Phase 6: Design System.
 - Phase 7: Validation.
 
+# Detailed Implementation Task List
+
+This task list translates the PRD into implementation-ready work. It is intentionally limited to the PRD scope and excludes shopping cart, wishlist, coupons, notifications, chat, real payment gateway integration, package CRUD, customer CRUD, report export, multi-language support, real quota tracking, and real telecom integration.
+
+## Phase 1 Task List: Foundation
+
+Status: Done.
+
+| Task ID | Status | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|---|
+| F-01 | Done | Confirm application stack | Align implementation with PRD technical scope | PRD technical scope | React, TypeScript, MUI, React Query, React Router, JSON Server confirmed | No unsupported framework or backend is introduced |
+| F-02 | Done | Define core TypeScript models | Create shared contracts for PRD entities | PRD data model | `User`, `Package`, `Transaction`, `ActivePackage` types | Models include only PRD fields plus minimal display-only fields required by PRD, such as package benefits |
+| F-03 | Done | Define role enum | Support customer and seller access rules | Users model | `customer` and `seller` roles | No additional roles exist |
+| F-04 | Done | Define transaction status enum | Keep transaction status aligned to PRD | Transactions model | `pending`, `success`, `failed` statuses | No additional statuses exist |
+| F-05 | Done | Define provider constants | Keep provider filtering controlled | PRD provider list | Telkomsel, XL, Indosat, Tri, Smartfren constants | Catalog and dashboard use only supported providers |
+| F-06 | Done | Create JSON Server data structure | Provide mock backend collections | PRD data model | Mock `users`, `packages`, `transactions`, `activePackages` collections | All required collections are available through JSON Server |
+| F-07 | Done | Seed customer users | Support customer login, dashboard, transactions, and profile | Users model | Customer records with name, email, phone number, password, role | At least one customer can log in and access customer portal |
+| F-08 | Done | Seed seller users | Support seller login without seller registration | Users model | Seller records with name, email, phone number, password, role | At least one seller can log in and access seller portal |
+| F-09 | Done | Seed packages | Support marketplace discovery | Packages model, provider constants | Package records across supported providers | Packages include provider, name, quota, validityDays, price, and discovery flags |
+| F-10 | Done | Seed package discovery flags | Support dashboard package sections | Packages model | `isPopular`, `isFeatured`, `isBestValue` values | Popular, featured, and best value sections can each render data |
+| F-11 | Done | Seed package benefits display data | Support package detail requirement | Package Detail PRD | Benefits available for package detail | Benefits appear only as detail display content and do not create new feature behavior |
+| F-12 | Done | Seed transactions | Support customer and seller transaction views | Transactions model | Transaction records linked to customers and packages | Transactions use only pending, success, or failed statuses |
+| F-13 | Done | Seed active packages | Support active package and quota widgets | Active Packages model | Active package records linked to customers and packages | Active package data supports total quota, remaining quota, and expiry date |
+| F-14 | Done | Create API client layer | Centralize JSON Server requests | JSON Server | Typed fetch/query functions | Pages do not duplicate low-level request logic |
+| F-15 | Done | Configure React Query provider | Support server-state access | React Query | Query client provider | Customer and seller data can be fetched through query hooks |
+| F-16 | Done | Configure router provider | Support page and role navigation | React Router | Application route provider | Routes can be protected by auth and role |
+| F-17 | Done | Implement mock login | Enable customer and seller access | Users data | Login function using seeded users | Valid users can authenticate; invalid credentials fail |
+| F-18 | Done | Implement customer registration | Support PRD customer responsibility | Users data | Register function creating customer users | Registration creates customer role only |
+| F-19 | Done | Implement session persistence | Keep mock login usable across refresh | Mock auth | Stored authenticated user state | Refresh does not immediately lose mock session |
+| F-20 | Done | Implement logout | Allow ending authenticated session | Mock auth | Logout function | User returns to unauthenticated state |
+| F-21 | Done | Implement role-based route guards | Protect portal boundaries | Auth state, role enum | Customer and seller protected route wrappers | Customer cannot access seller routes; seller cannot access customer routes |
+| F-22 | Done | Define shared formatting utilities | Keep package, quota, date, and amount display consistent | Data model | Formatters for price, quota, validity, date, percentage | Values display consistently across dashboard, catalog, checkout, and transactions |
+| F-23 | Done | Define analytics utility functions | Support seller dashboard calculations | Users, packages, transactions | Total customers, total transactions, revenue, success rate, top providers, top packages | Calculations are derived only from mock data |
+| F-24 | Done | Validate mock data relationships | Prevent broken page states | Seed data | Relationship check between users, packages, transactions, active packages | Every transaction links to an existing customer and package |
+
+## Phase 2 Task List: Information Architecture
+
+Status: Done.
+
+| Task ID | Status | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|---|
+| IA-01 | Done | Define unauthenticated routes | Support registration and login | Mock auth | `/register`, `/login` routes | Unauthenticated users can reach register and login |
+| IA-02 | Done | Define customer route namespace | Separate customer portal | Role-based access | Customer route group | Customer pages are grouped under customer access rules |
+| IA-03 | Done | Define seller route namespace | Separate seller portal | Role-based access | Seller route group | Seller pages are grouped under seller access rules |
+| IA-04 | Done | Add customer dashboard route | Support post-login customer landing page | Customer IA | Customer Dashboard route | Customer login lands on dashboard |
+| IA-05 | Done | Add package catalog route | Support package discovery | Customer IA | Packages route | Customer can navigate to catalog |
+| IA-06 | Done | Add package detail route or state contract | Support detail interaction | Package Catalog | Detail addressability or selected package state | Detail can be opened from dashboard or catalog |
+| IA-07 | Done | Add checkout route or state contract | Support direct purchase flow | Package Detail | Checkout addressability or selected package state | Checkout can only proceed with a selected package |
+| IA-08 | Done | Add purchase success route | Support post-checkout confirmation | Checkout | Success route with transaction reference | Success displays a created transaction summary |
+| IA-09 | Done | Add customer transactions route | Support transaction history | Customer IA | Transactions route | Customer can view own transactions |
+| IA-10 | Done | Add transaction view route | Support PRD success metric flow | Transactions | Transaction detail route | Customer can open a transaction after purchase success |
+| IA-11 | Done | Add profile route | Support customer profile view | Customer IA | Profile route | Customer can view profile information |
+| IA-12 | Done | Add seller dashboard route | Support seller landing page | Seller IA | Seller Dashboard route | Seller login lands on seller dashboard |
+| IA-13 | Done | Add seller customers route | Support customer monitoring | Seller IA | Customers route | Seller can view customers list |
+| IA-14 | Done | Add seller customer detail route | Support seller journey | Customers route | Customer detail route | Seller can open a customer detail page |
+| IA-15 | Done | Add seller transactions route | Support transaction monitoring | Seller IA | Transactions route | Seller can view all transactions |
+| IA-16 | Done | Define navigation labels | Keep navigation limited to PRD pages | IA | Customer and seller nav item definitions | Customer nav contains Dashboard, Packages, Transactions, Profile; seller nav contains Dashboard, Customers, Transactions |
+| IA-17 | Done | Define default redirects | Prevent dead-end states | Auth and roles | Redirect rules | Authenticated users route to correct portal; unauthenticated users route to login |
+| IA-18 | Done | Define not-found behavior | Handle invalid paths | Router | Not-found route | Invalid routes do not expose wrong portal content |
+
+## Phase 3 Task List: Customer Portal UX
+
+Status: Done.
+
+| Task ID | Status | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|---|
+| C-01 | Done | Build Customer Dashboard data query | Load dashboard data | Authenticated customer, API client | Dashboard query composition | Active package, package groups, and recent transactions are available |
+| C-02 | Done | Implement Active Package widget | Display subscription information | Active package, package data | Widget with package name, total quota, remaining quota, usage percentage, expiry date | Widget matches PRD data requirements |
+| C-03 | Done | Calculate usage percentage | Support quota display | Active package data | Usage percentage value | Percentage is derived from total quota and remaining quota |
+| C-04 | Done | Implement Popular Packages section | Encourage discovery | Package flags | Popular package list | Section renders packages where `isPopular` is true |
+| C-05 | Done | Implement Featured Packages section | Encourage exploration | Package flags | Featured package list | Section renders packages where `isFeatured` is true |
+| C-06 | Done | Implement Best Value Packages section | Promote value-oriented discovery | Package flags | Best value package list | Section renders packages where `isBestValue` is true |
+| C-07 | Done | Implement Explore By Provider section | Support provider browsing | Provider constants | Provider entry points | Only Telkomsel, XL, Indosat, Tri, Smartfren appear |
+| C-08 | Done | Implement Recent Transactions section | Provide customer activity visibility | Customer transactions | Recent transaction list | Section shows status, purchase date, package, and amount |
+| C-09 | Done | Link dashboard package cards to detail | Support page-per-visit flow | Package sections | Package selection behavior | Selecting a package opens package detail |
+| C-10 | Done | Link provider exploration to catalog | Support discovery | Provider constants, catalog | Provider-filtered catalog entry | Selecting a provider opens catalog filtered to that provider |
+| C-11 | Done | Build Package Catalog query | Load all packages | API client | Package catalog data | Catalog renders package records |
+| C-12 | Done | Implement package search | Help customers find packages | Catalog data | Search input and filtering logic | Search filters packages by package content without adding new filter types |
+| C-13 | Done | Implement provider filter | Narrow package catalog | Provider constants | Provider filter control | Filter supports PRD providers only |
+| C-14 | Done | Implement package cards | Summarize packages | Packages data | Reusable card pattern | Card displays provider, package name, quota, validity, and price |
+| C-15 | Done | Implement catalog empty state | Handle no search/filter results | Search and filter state | Empty result handling | Empty state does not add recommendations outside PRD |
+| C-16 | Done | Implement Package Detail content | Show selected package details | Selected package | Detail content | Detail displays provider, package name, quota, validity, benefits, and price |
+| C-17 | Done | Implement desktop Package Detail modal behavior | Match responsive PRD | Responsive strategy | Modal on desktop | Desktop opens detail in modal |
+| C-18 | Done | Implement mobile Package Detail bottom sheet behavior | Match responsive PRD | Responsive strategy | Bottom sheet on mobile | Mobile opens detail in bottom sheet |
+| C-19 | Done | Implement transition from detail to checkout | Support purchase flow | Selected package | Checkout open action | Customer can proceed from package detail to checkout |
+| C-20 | Done | Implement Checkout package summary | Confirm selected package | Selected package | Package summary section | Checkout shows selected package information |
+| C-21 | Done | Implement Checkout customer information | Confirm purchaser identity | Authenticated customer | Customer information section | Checkout shows customer name, email, and phone number |
+| C-22 | Done | Implement Checkout payment method | Satisfy PRD checkout requirement | Mock checkout | Payment method section | Payment method is mock-only and does not integrate payment gateway |
+| C-23 | Done | Implement Checkout total price | Confirm purchase amount | Selected package | Total price section | Total equals selected package price |
+| C-24 | Done | Implement desktop Checkout modal behavior | Match responsive PRD | Responsive strategy | Checkout modal on desktop | Desktop checkout opens in modal |
+| C-25 | Done | Implement mobile Checkout bottom sheet behavior | Match responsive PRD | Responsive strategy | Checkout bottom sheet on mobile | Mobile checkout opens in bottom sheet |
+| C-26 | Done | Implement purchase confirmation action | Create transaction | Checkout data | New transaction record | Confirm purchase creates a transaction linked to customer and package |
+| C-27 | Done | Define purchase transaction status behavior | Keep mock purchase explicit | Transaction statuses | Status assignment rule | Created transaction uses a PRD-valid status |
+| C-28 | Done | Implement Purchase Success content | Confirm purchase | Created transaction | Success screen | Success displays message and transaction summary |
+| C-29 | Done | Implement View Transaction action | Complete expected flow | Created transaction | Link to transaction view | Action opens transaction view |
+| C-30 | Done | Implement Continue Browsing action | Encourage discovery after purchase | Catalog route | Link to package catalog | Action returns to catalog |
+| C-31 | Done | Implement Return to Dashboard action | Return to subscription overview | Dashboard route | Link to dashboard | Action returns to dashboard |
+| C-32 | Done | Build Customer Transactions query | Load customer history | Authenticated customer | Customer transaction list data | Only current customer's transactions are shown |
+| C-33 | Done | Implement Customer Transactions list | Show transaction history | Transactions and packages | Transaction list | List displays status, purchase date, package, and amount |
+| C-34 | Done | Implement Transaction View | Show selected transaction | Transaction and package data | Transaction detail screen | View displays status, purchase date, package, provider, and amount |
+| C-35 | Done | Implement Customer Profile | Show customer account details | Authenticated customer | Profile page | Profile displays name, email, phone number, and role |
+| C-36 | Done | Exclude profile editing | Preserve PRD non-scope | Profile PRD | Read-only profile | No edit action appears |
+| C-37 | Done | Verify customer page-per-visit path | Validate success metric flow | Customer pages | End-to-end flow check | Dashboard to catalog to detail to checkout to transaction view works |
+
+## Phase 4 Task List: Seller Portal UX
+
+Status: Done.
+
+| Task ID | Status | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|---|
+| S-01 | Done | Build Seller Dashboard data query | Load analytics data | Users, packages, transactions | Dashboard query composition | KPI, top providers, top packages, and recent transactions data are available |
+| S-02 | Done | Implement Total Customers KPI | Show customer count | Users data | KPI value | Counts users with customer role |
+| S-03 | Done | Implement Total Transactions KPI | Show transaction volume | Transactions data | KPI value | Counts all transactions |
+| S-04 | Done | Implement Total Revenue KPI | Show business revenue | Transactions data | KPI value | Revenue is derived from transaction amount values |
+| S-05 | Done | Implement Transaction Success Rate KPI | Show transaction performance | Transactions data | KPI value | Success rate uses transactions with status `success` divided by total transactions |
+| S-06 | Done | Implement Top Providers section | Identify provider performance | Transactions and packages | Provider ranking | Ranking is derived from transaction-package-provider relationships |
+| S-07 | Done | Implement Top Packages section | Identify package performance | Transactions and packages | Package ranking | Ranking is derived from transaction-package relationships |
+| S-08 | Done | Implement Seller Recent Transactions | Support quick monitoring | Transactions, users, packages | Recent transaction list | Displays customer, package, provider, status, amount, and purchase date where applicable |
+| S-09 | Done | Build Customers query | Load customer monitoring data | Users, active packages, transactions, packages | Customer list data | Seller can access customer list data |
+| S-10 | Done | Implement Customers list | Monitor customers | Customer list data | Customers page | Displays name, phone number, active package, and total transactions |
+| S-11 | Done | Link customer row to Customer Detail | Support seller journey | Customers list | Customer detail navigation | Seller can open selected customer detail |
+| S-12 | Done | Build Customer Detail query | Load selected customer data | Customer ID, users, active packages, transactions, packages | Detail data | Customer information, active package, quota, and history are available |
+| S-13 | Done | Implement Customer Information section | Show selected customer identity | User data | Customer info section | Displays customer information from user record |
+| S-14 | Done | Implement Customer Active Package section | Show subscription state | Active package, package data | Active package section | Displays active package and remaining quota |
+| S-15 | Done | Implement Customer Transaction History | Show customer purchase history | Transactions, packages | History list | Displays transaction status, purchase date, package, and amount |
+| S-16 | Done | Build Seller Transactions query | Load all transaction monitoring data | Transactions, users, packages | Seller transaction list data | All transactions can be listed for seller |
+| S-17 | Done | Implement Seller Transactions list | Monitor transactions | Seller transaction list data | Transactions page | Displays customer, package, provider, status, amount, and purchase date |
+| S-18 | Done | Exclude seller CRUD actions | Preserve PRD non-scope | Non-goals | Read-only seller pages | No package CRUD, customer CRUD, export, or transaction operation controls appear |
+| S-19 | Done | Verify seller monitoring flow | Validate seller journey | Seller pages | End-to-end flow check | Login to dashboard to customers to customer detail to transactions works |
+
+## Phase 5 Task List: Responsive Optimization
+
+| Task ID | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|
+| R-01 | Define responsive breakpoint rules | Standardize mobile and desktop behavior | MUI, PRD responsive strategy | Breakpoint usage convention | Customer mobile and desktop interaction rules are consistent |
+| R-02 | Apply mobile-first customer layouts | Match PRD priority | Customer pages | Mobile customer layouts | Customer dashboard, catalog, transactions, and profile are usable on mobile |
+| R-03 | Expand customer layouts for desktop | Support larger screens | Customer mobile layouts | Desktop customer layouts | Desktop adds space without changing PRD feature scope |
+| R-04 | Validate package detail modal on desktop | Confirm PRD desktop behavior | Package Detail | Desktop modal behavior | Detail opens as modal on desktop viewport |
+| R-05 | Validate package detail bottom sheet on mobile | Confirm PRD mobile behavior | Package Detail | Mobile bottom sheet behavior | Detail opens as bottom sheet on mobile viewport |
+| R-06 | Validate checkout modal on desktop | Confirm PRD desktop behavior | Checkout | Desktop modal behavior | Checkout opens as modal on desktop viewport |
+| R-07 | Validate checkout bottom sheet on mobile | Confirm PRD mobile behavior | Checkout | Mobile bottom sheet behavior | Checkout opens as bottom sheet on mobile viewport |
+| R-08 | Apply desktop-first seller layouts | Match PRD priority | Seller pages | Desktop seller layouts | Seller dashboard, customers, customer detail, and transactions prioritize desktop usability |
+| R-09 | Implement seller desktop drawer behavior | Match PRD seller strategy | Seller navigation | Drawer navigation | Seller desktop uses pages and drawer behavior |
+| R-10 | Adapt seller views to mobile | Preserve access on small screens | Seller layouts | Responsive seller layouts | Seller pages remain usable on mobile |
+| R-11 | Check responsive table/list behavior | Prevent unreadable seller monitoring views | Transactions and customers data | Responsive list/table behavior | Required fields remain readable without adding export or CRUD |
+| R-12 | Check modal and bottom sheet accessibility basics | Keep interactions operable | Modal and sheet components | Focus and close behavior | Dialogs can be opened, closed, and navigated predictably |
+
+## Phase 6 Task List: Design System
+
+| Task ID | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|
+| DS-01 | Define MUI theme baseline | Establish consistent implementation layer | MUI | Theme configuration | Theme supports all PRD pages without adding visual-only scope |
+| DS-02 | Create app shell layouts | Support role-specific portals | IA, routing | Customer and seller shells | Shells contain only PRD navigation items |
+| DS-03 | Create authentication form pattern | Support register and login | Auth screens | Shared form structure | Register and login use consistent form behavior |
+| DS-04 | Create package card component | Reuse package summaries | Package card requirements | Package card | Displays provider, package name, quota, validity, and price |
+| DS-05 | Create active package component | Reuse quota display | Active package requirements | Active package widget | Displays required active package fields |
+| DS-06 | Create transaction list pattern | Reuse transaction displays | Transaction requirements | Transaction list component | Supports customer and seller required transaction fields |
+| DS-07 | Create KPI card pattern | Support seller analytics | Seller KPI requirements | KPI card component | Displays KPI label and value |
+| DS-08 | Create provider entry pattern | Support explore by provider | Provider constants | Provider entry component | Uses only supported providers |
+| DS-09 | Create modal pattern | Support desktop package detail and checkout | Responsive strategy | Reusable modal component | Desktop modal behavior works for detail and checkout |
+| DS-10 | Create bottom sheet pattern | Support mobile package detail and checkout | Responsive strategy | Reusable bottom sheet component | Mobile bottom sheet behavior works for detail and checkout |
+| DS-11 | Create read-only detail pattern | Support profile, transaction, and seller customer detail | Screen breakdown | Detail section component | Read-only content does not expose edit controls |
+| DS-12 | Create empty/loading/error states | Handle query states | React Query | State components | States do not introduce out-of-scope actions |
+| DS-13 | Document component usage boundaries | Prevent scope drift | Non-goals | Usage notes | Components are mapped to PRD pages and features |
+
+## Phase 7 Task List: Validation
+
+| Task ID | Task | Purpose | Dependencies | Output | Acceptance Criteria |
+|---|---|---|---|---|---|
+| V-01 | Validate PRD feature coverage | Confirm in-scope delivery | Completed implementation | Coverage checklist | Every in-scope feature is accounted for |
+| V-02 | Validate non-goal exclusion | Prevent scope creep | Completed implementation | Non-goal checklist | No cart, wishlist, coupons, notifications, chat, real payments, CRUD, export, multi-language, real quota, or telecom integration exists |
+| V-03 | Validate customer auth flow | Confirm customer access | Mock auth | Auth test result | Customer can register or log in and access customer portal |
+| V-04 | Validate seller auth flow | Confirm seller access | Mock auth | Auth test result | Seller can log in and access seller portal |
+| V-05 | Validate role-based access | Confirm portal separation | Route guards | Access control result | Customer cannot access seller pages; seller cannot access customer pages |
+| V-06 | Validate customer page-per-visit flow | Confirm primary success metric path | Customer pages | Flow result | Dashboard → package catalog → package detail → checkout → transaction view works |
+| V-07 | Validate package discovery | Confirm exploration behavior | Dashboard and catalog | Discovery result | Customers can browse dashboard package sections, explore by provider, search, and filter |
+| V-08 | Validate checkout completion | Confirm purchase flow | Checkout and transactions | Checkout result | Confirm purchase creates a transaction and shows success |
+| V-09 | Validate customer transactions | Confirm history access | Transactions | Transaction result | Customer sees own transactions and can open transaction view |
+| V-10 | Validate customer profile | Confirm profile scope | Profile | Profile result | Profile shows name, email, phone number, and role; no edit action exists |
+| V-11 | Validate seller dashboard analytics | Confirm business visibility | Seller dashboard | Analytics result | KPI summary, top providers, top packages, and recent transactions render from mock data |
+| V-12 | Validate seller customer monitoring | Confirm monitoring efficiency | Seller customers | Monitoring result | Seller can view customers and open customer detail |
+| V-13 | Validate seller transaction monitoring | Confirm transaction visibility | Seller transactions | Monitoring result | Seller can view customer, package, provider, status, amount, and purchase date |
+| V-14 | Validate customer responsive behavior | Confirm mobile-first strategy | Customer portal | Responsive result | Detail and checkout use desktop modal and mobile bottom sheet |
+| V-15 | Validate seller responsive behavior | Confirm desktop-first strategy | Seller portal | Responsive result | Seller desktop uses pages and drawer, mobile remains responsive |
+| V-16 | Validate data integrity | Confirm mock data reliability | JSON Server data | Data integrity result | Users, packages, transactions, and active packages references are valid |
+| V-17 | Validate deployment readiness | Confirm technical scope readiness | Frontend and JSON Server | Deployment checklist | Frontend and mock API can be deployed according to PRD technical scope |
+
 # Phase 1
 
 Foundation

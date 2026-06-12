@@ -1,0 +1,142 @@
+{
+  "users": [
+    {
+      "id": "user-customer-1",
+      "role": "customer",
+      "name": "Alya Pratama",
+      "email": "alya@example.com",
+      "phoneNumber": "081234567890",
+      "password": "customer123"
+    },
+    {
+      "id": "user-customer-2",
+      "role": "customer",
+      "name": "Bima Santoso",
+      "email": "bima@example.com",
+      "phoneNumber": "081298765432",
+      "password": "customer123"
+    },
+    {
+      "id": "user-seller-1",
+      "role": "seller",
+      "name": "Seller Partner",
+      "email": "seller@example.com",
+      "phoneNumber": "080011122233",
+      "password": "seller123"
+    }
+  ],
+  "packages": [
+    {
+      "id": "pkg-telkomsel-25gb",
+      "provider": "Telkomsel",
+      "name": "Internet 25GB",
+      "quota": 25,
+      "validityDays": 30,
+      "price": 75000,
+      "isPopular": true,
+      "isFeatured": true,
+      "isBestValue": false,
+      "benefits": ["25GB internet quota", "30 days validity", "Multi-network access"]
+    },
+    {
+      "id": "pkg-xl-40gb",
+      "provider": "XL",
+      "name": "Internet 40GB",
+      "quota": 40,
+      "validityDays": 30,
+      "price": 95000,
+      "isPopular": true,
+      "isFeatured": false,
+      "isBestValue": true,
+      "benefits": ["40GB internet quota", "30 days validity", "Best value package"]
+    },
+    {
+      "id": "pkg-indosat-18gb",
+      "provider": "Indosat",
+      "name": "Internet 18GB",
+      "quota": 18,
+      "validityDays": 30,
+      "price": 60000,
+      "isPopular": false,
+      "isFeatured": true,
+      "isBestValue": false,
+      "benefits": ["18GB internet quota", "30 days validity", "Featured package"]
+    },
+    {
+      "id": "pkg-tri-30gb",
+      "provider": "Tri",
+      "name": "Internet 30GB",
+      "quota": 30,
+      "validityDays": 30,
+      "price": 68000,
+      "isPopular": true,
+      "isFeatured": false,
+      "isBestValue": true,
+      "benefits": ["30GB internet quota", "30 days validity", "Best value package"]
+    },
+    {
+      "id": "pkg-smartfren-12gb",
+      "provider": "Smartfren",
+      "name": "Internet 12GB",
+      "quota": 12,
+      "validityDays": 14,
+      "price": 35000,
+      "isPopular": false,
+      "isFeatured": true,
+      "isBestValue": false,
+      "benefits": ["12GB internet quota", "14 days validity", "Featured package"]
+    }
+  ],
+  "transactions": [
+    {
+      "id": "trx-001",
+      "customerId": "user-customer-1",
+      "packageId": "pkg-telkomsel-25gb",
+      "amount": 75000,
+      "status": "success",
+      "createdAt": "2026-06-01T09:00:00.000Z"
+    },
+    {
+      "id": "trx-002",
+      "customerId": "user-customer-1",
+      "packageId": "pkg-xl-40gb",
+      "amount": 95000,
+      "status": "pending",
+      "createdAt": "2026-06-08T10:30:00.000Z"
+    },
+    {
+      "id": "trx-003",
+      "customerId": "user-customer-2",
+      "packageId": "pkg-tri-30gb",
+      "amount": 68000,
+      "status": "success",
+      "createdAt": "2026-06-04T14:15:00.000Z"
+    },
+    {
+      "id": "trx-004",
+      "customerId": "user-customer-2",
+      "packageId": "pkg-smartfren-12gb",
+      "amount": 35000,
+      "status": "failed",
+      "createdAt": "2026-06-10T08:45:00.000Z"
+    }
+  ],
+  "activePackages": [
+    {
+      "id": "active-001",
+      "customerId": "user-customer-1",
+      "packageId": "pkg-telkomsel-25gb",
+      "totalQuota": 25,
+      "remainingQuota": 12.5,
+      "expiryDate": "2026-06-30T23:59:59.000Z"
+    },
+    {
+      "id": "active-002",
+      "customerId": "user-customer-2",
+      "packageId": "pkg-tri-30gb",
+      "totalQuota": 30,
+      "remainingQuota": 18,
+      "expiryDate": "2026-07-04T23:59:59.000Z"
+    }
+  ]
+}
